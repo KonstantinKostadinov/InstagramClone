@@ -24,6 +24,7 @@
 		B5CF1F2622E39D89007D2F69 /* UserProfilePhotoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5CF1F2522E39D89007D2F69 /* UserProfilePhotoCell.swift */; };
 		B5DEC00022834EDC00993F27 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B5DEBFFF22834EDC00993F27 /* GoogleService-Info.plist */; };
 		B5DEC0022283509200993F27 /* SignUpController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5DEC0012283509200993F27 /* SignUpController.swift */; };
+		B5F1E83922E3B4D3004BC48E /* CustomImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F1E83822E3B4D3004BC48E /* CustomImageView.swift */; };
 		FD4F7AE2AB8F5CFFC7926F6E /* Pods_InstagramClone.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7ECE4034A0446FB8F09D44AE /* Pods_InstagramClone.framework */; };
 /* End PBXBuildFile section */
 
@@ -49,6 +50,7 @@
 		B5CF1F2522E39D89007D2F69 /* UserProfilePhotoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfilePhotoCell.swift; sourceTree = "<group>"; };
 		B5DEBFFF22834EDC00993F27 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		B5DEC0012283509200993F27 /* SignUpController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpController.swift; sourceTree = "<group>"; };
+		B5F1E83822E3B4D3004BC48E /* CustomImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomImageView.swift; sourceTree = "<group>"; };
 		DFB1352DC8E2F7169E311984 /* Pods-InstagramClone.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-InstagramClone.debug.xcconfig"; path = "Pods/Target Support Files/Pods-InstagramClone/Pods-InstagramClone.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -114,6 +116,7 @@
 			isa = PBXGroup;
 			children = (
 				3DEA7B57228231790077DFEA /* Extentions.swift */,
+				B5F1E83822E3B4D3004BC48E /* CustomImageView.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -294,6 +297,7 @@
 				B553B4C822B50EE4005B4F69 /* SharePhotoController.swift in Sources */,
 				B5DEC0022283509200993F27 /* SignUpController.swift in Sources */,
 				B53995AF2295314800C003BF /* PhotoSelectorCell.swift in Sources */,
+				B5F1E83922E3B4D3004BC48E /* CustomImageView.swift in Sources */,
 				B5CF1F2422E39A8A007D2F69 /* Post.swift in Sources */,
 				3DEA7B58228231790077DFEA /* Extentions.swift in Sources */,
 				B5CF1F2622E39D89007D2F69 /* UserProfilePhotoCell.swift in Sources */,
