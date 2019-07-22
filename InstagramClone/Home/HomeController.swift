@@ -40,7 +40,13 @@ class HomeController: UICollectionViewController,UICollectionViewDelegateFlowLay
         
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: view.frame.width, height: 200)
+        
+        var height: CGFloat = 44 + 8 + 8 //userprofilepic username optionsbutton
+        height += view.frame.width
+        height += 50
+        height += 60
+        
+        return CGSize(width: view.frame.width, height: height)
     }
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return posts.count
