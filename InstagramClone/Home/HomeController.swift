@@ -25,18 +25,27 @@ class HomeController: UICollectionViewController,UICollectionViewDelegateFlowLay
     
     fileprivate func fetchPosts(){
         guard let uid = Auth.auth().currentUser?.uid else {return}
-        let ref = Database.database().reference().child("posts").child(uid)
-        ref.observeSingleEvent(of: .value, with: { (snapshot) in
-            guard let dictionaries = snapshot.value as? [String:Any] else {return}
-            dictionaries.forEach({ (key,value) in
-                guard let dictionary = value as? [String:Any] else {return}
-                let post = Post(dictionary: dictionary)
-                self.posts.append(post)
-            })
-            self.collectionView.reloadData()
+        Database.database().reference().child("users").child(uid).observeSingleEvent(of: .value, with: { (snapshot) in
+            print(snapshot.value)
+            guard let userDictionary = snapshot.value as? [String:Any] else {return}
+            let user = User(dictionary: userDictionary)
+            let ref = Database.database().reference().child("posts").child(uid)
+            ref.observeSingleEvent(of: .value, with: { (snapshot) in
+                guard let dictionaries = snapshot.value as? [String:Any] else {return}
+                dictionaries.forEach({ (key,value) in
+                    guard let dictionary = value as? [String:Any] else {return}
+                    let post = Post(user: user,dictionary: dictionary)
+                    self.posts.append(post)
+                })
+                self.collectionView.reloadData()
+            }) { (err) in
+                print("Failed to fetch posts, ", err)
+            }
         }) { (err) in
-            print("Failed to fetch posts, ", err)
+            print("failed to fetch user for posts: ",err)
         }
+        
+            
         
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
