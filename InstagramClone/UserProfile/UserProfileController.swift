@@ -25,7 +25,6 @@ class UserProfileController: UICollectionViewController, UICollectionViewDelegat
         collectionView?.register(UserProfilePhotoCell.self, forCellWithReuseIdentifier: cellId)
         
         setupLogOutButton()
-        //fetchPosts()
         fetchOrderedPosts()
     }
     var posts = [Post]()
@@ -35,10 +34,8 @@ class UserProfileController: UICollectionViewController, UICollectionViewDelegat
         ref.queryOrdered(byChild: "creationDate").observe(.childAdded, with: { (snapshot) in
             print(snapshot.key,snapshot.value)
             guard let dictionary = snapshot.value as? [String:Any] else {return}
-            
             guard let user = self.user else {return}
             let post = Post(user: user,dictionary: dictionary)
-            //self.posts.append(post)
             self.posts.insert(post, at: 0)
             self.collectionView.reloadData()
         }) { (err) in
@@ -106,19 +103,11 @@ class UserProfileController: UICollectionViewController, UICollectionViewDelegat
     var user: User?
     fileprivate func fetchUser() {
         guard let uid = Auth.auth().currentUser?.uid else { return }
-        
-        Database.database().reference().child("users").child(uid).observeSingleEvent(of: .value, with: { (snapshot) in
-            print(snapshot.value ?? "")
-            
-            guard let dictionary = snapshot.value as? [String: Any] else { return }
-            
-            self.user = User(dictionary: dictionary)
+        Database.fetchingUserWithUID(uid: uid) { (user) in
+            self.user = user
             self.navigationItem.title = self.user?.username
             
             self.collectionView?.reloadData()
-            
-        }) { (err) in
-            print("Failed to fetch user:", err)
         }
     }
 }

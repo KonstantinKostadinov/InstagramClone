@@ -7,7 +7,7 @@
 //
 
 import UIKit
-
+import Firebase
 extension UIColor{
     static func rgb(red: CGFloat, green: CGFloat, blue: CGFloat) -> UIColor{
         return UIColor(red: red/255, green: green/255, blue: blue/255, alpha: 1)
@@ -44,4 +44,18 @@ extension UIView {
         }
     }
     
+}
+
+extension Database{
+    static func fetchingUserWithUID(uid: String, completion: @escaping (User) ->()){
+        Database.database().reference().child("users").child(uid).observeSingleEvent(of: .value, with: { (snapshot) in
+            print(snapshot.value)
+            guard let userDictionary = snapshot.value as? [String:Any] else {return}
+            let user = User(uid: uid, dictionary: userDictionary)
+            print(user.username)
+            completion(user)
+        }) { (err) in
+            print("failed to fetch user for posts: ",err)
+        }
+    }
 }
