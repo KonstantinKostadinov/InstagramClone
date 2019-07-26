@@ -16,7 +16,7 @@ class UserSearchController: UICollectionViewController,UICollectionViewDelegateF
         let sb = UISearchBar()
         sb.placeholder = "Enter username"
         sb.barTintColor = .gray
-        UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).backgroundColor = UIColor.rgb(red: 230, green: 230, blue: 230)
+    UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).backgroundColor = UIColor.rgb(red: 230, green: 230, blue: 230)
         sb.delegate = self
         
         return sb
@@ -40,7 +40,22 @@ class UserSearchController: UICollectionViewController,UICollectionViewDelegateF
         searchBar.anchor(top: navBar?.topAnchor, left: navBar?.leftAnchor, bottom: navBar?.bottomAnchor, right: navBar?.rightAnchor, paddingTop: 0, paddingLeft: 8, paddingBottom: 0, paddingRight: 8, width: 0, height: 0)
         collectionView.register(UserSearchCell.self, forCellWithReuseIdentifier: cellId)
         collectionView.alwaysBounceVertical = true
+        collectionView.keyboardDismissMode = .onDrag
         fetchUsers()
+    }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        searchBar.isHidden = false
+        searchBar.resignFirstResponder()
+    }
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        searchBar.isHidden = true
+        let user = filteredUsers[indexPath.item]
+        print(user.username)
+        let userProfileController = UserProfileController(collectionViewLayout: UICollectionViewFlowLayout())
+        userProfileController.userId = user.uid
+        navigationController?.pushViewController(userProfileController, animated: true)
+        
     }
     fileprivate func fetchUsers(){
         let ref = Database.database().reference().child("users")
@@ -49,6 +64,10 @@ class UserSearchController: UICollectionViewController,UICollectionViewDelegateF
             
             dictionaries.forEach({ (key,value) in
                 print(key,value)
+                if key == Auth.auth().currentUser?.uid{
+                    print("Found Myself, omit from list")
+                    return
+                }
                 guard let userDictionary = value as? [String:Any] else {return}
                 let user = User(uid: key, dictionary: userDictionary)
                 self.users.append(user)
