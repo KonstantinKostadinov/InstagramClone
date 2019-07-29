@@ -49,7 +49,6 @@ extension UIView {
 extension Database{
     static func fetchingUserWithUID(uid: String, completion: @escaping (User) ->()){
         Database.database().reference().child("users").child(uid).observeSingleEvent(of: .value, with: { (snapshot) in
-            print(snapshot.value)
             guard let userDictionary = snapshot.value as? [String:Any] else {return}
             let user = User(uid: uid, dictionary: userDictionary)
             print(user.username)
@@ -57,5 +56,41 @@ extension Database{
         }) { (err) in
             print("failed to fetch user for posts: ",err)
         }
+    }
+}
+
+extension Date{
+    func timeAgoDisplay() -> String{
+        let secondsAgo = Int(Date().timeIntervalSince(self))
+        
+        let minute = 60
+        let hour = 60 * minute
+        let day = 24 * hour
+        let week = 7 * 24
+        let month = 4 * week
+        let quotient: Int
+        let unit: String
+        if secondsAgo < minute{
+            quotient = secondsAgo
+            unit = "second"
+        }else if(secondsAgo < hour){
+            quotient = secondsAgo/minute
+            unit = "minute"
+        }else if(secondsAgo < day){
+            quotient = secondsAgo/hour
+            unit = "hour"
+        }else if(secondsAgo<week){
+            quotient = secondsAgo/day
+            unit = "day"
+        }else if (secondsAgo < month ){
+            quotient = secondsAgo/week
+            unit = "week"
+        }else {
+            quotient = secondsAgo/month
+            unit = "month"
+        }
+        
+        return "\(quotient) \(unit)\(quotient == 1 ? "" : "s") ago"
+        
     }
 }

@@ -15,7 +15,8 @@ class SharePhotoController: UIViewController {
             self.imageView.image = selectedImage
         }
     }
-    
+    static let updateFeedNotificationName = NSNotification.Name(rawValue: "UpdateFeed")
+
     let imageView: UIImageView = {
         let iv = UIImageView()
         iv.backgroundColor = .red
@@ -102,6 +103,7 @@ class SharePhotoController: UIViewController {
             
             print("Successfully saved post to DB")
             self.dismiss(animated: true, completion: nil)
+            NotificationCenter.default.post(name: SharePhotoController.updateFeedNotificationName, object: nil)
         }
     }
 
