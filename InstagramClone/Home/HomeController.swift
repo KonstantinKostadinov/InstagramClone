@@ -49,8 +49,13 @@ class HomeController: UICollectionViewController,UICollectionViewDelegateFlowLay
     }
     func setupNavigatoinItems(){
         navigationItem.titleView = UIImageView(image: UIImage(named: "logo2"))
+        navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "camera3")?.withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(handleCamera))
     }
     
+    @objc func handleCamera(){
+        let cameraController = CameraController()
+        present(cameraController, animated: true, completion: nil)
+    }
     fileprivate func fetchPosts(){
         guard let uid = Auth.auth().currentUser?.uid else {return}
         Database.fetchingUserWithUID(uid: uid) { (user) in
