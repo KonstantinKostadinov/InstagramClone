@@ -8,7 +8,7 @@
 
 import UIKit
 import Firebase
-class HomeController: UICollectionViewController,UICollectionViewDelegateFlowLayout {
+class HomeController: UICollectionViewController,UICollectionViewDelegateFlowLayout, HomePostCellDelegate {
     let cellId = "cellId"
     var posts = [Post]()
     override func viewDidLoad() {
@@ -28,6 +28,7 @@ class HomeController: UICollectionViewController,UICollectionViewDelegateFlowLay
     }
     @objc func handleRefresh(){
         posts.removeAll()
+        collectionView.reloadData()
         fetchAllPost()
     }
     fileprivate func fetchAllPost(){
@@ -69,7 +70,8 @@ class HomeController: UICollectionViewController,UICollectionViewDelegateFlowLay
             guard let dictionaries = snapshot.value as? [String:Any] else {return}
             dictionaries.forEach({ (key,value) in
                 guard let dictionary = value as? [String:Any] else {return}
-                let post = Post(user: user,dictionary: dictionary)
+                var post = Post(user: user,dictionary: dictionary)
+                post.id = key
                 self.posts.append(post)
             })
             self.posts.sort(by: { (p1, p2) -> Bool in
@@ -85,8 +87,8 @@ class HomeController: UICollectionViewController,UICollectionViewDelegateFlowLay
         
         var height: CGFloat = 44 + 8 + 8 //userprofilepic username optionsbutton
         height += view.frame.width
-        height += 50
-        height += 60
+        height += 50 // like,comment...
+        height += 60 // caption
         
         return CGSize(width: view.frame.width, height: height)
     }
@@ -97,6 +99,13 @@ class HomeController: UICollectionViewController,UICollectionViewDelegateFlowLay
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! HomePostCell
         cell.post = posts[indexPath.item]
+        cell.delegate = self
         return cell
+    }
+    func didTapComment(post: Post) {
+        print(post.caption)
+        let commentsController = CommentsController(collectionViewLayout: UICollectionViewFlowLayout())
+        commentsController.post = post
+        navigationController?.pushViewController(commentsController, animated: true)
     }
 }
