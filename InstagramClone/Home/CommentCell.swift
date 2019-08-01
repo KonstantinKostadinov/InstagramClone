@@ -10,7 +10,6 @@ import UIKit
 class CommentCell: UICollectionViewCell{
     var comment: Comment?{
         didSet{
-            print(comment?.text)
             textLabel.text = comment?.text
         }
     }

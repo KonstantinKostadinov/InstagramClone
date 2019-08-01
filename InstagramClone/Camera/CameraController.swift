@@ -9,7 +9,7 @@
 import UIKit
 import AVFoundation
 class CameraController: UIViewController, AVCapturePhotoCaptureDelegate, UIViewControllerTransitioningDelegate {
-
+    
     let dismissButton: UIButton = {
         let button = UIButton(type: .system)
         button.setImage(#imageLiteral(resourceName: "right_arrow_shadow").withRenderingMode(.alwaysOriginal), for: .normal)
@@ -22,7 +22,7 @@ class CameraController: UIViewController, AVCapturePhotoCaptureDelegate, UIViewC
         button.addTarget(self, action: #selector(handleCapturePhoto), for: .touchUpInside)
         return button
     }()
-    @objc func handleDismiss(){
+    @objc func handleDismiss() {
         dismiss(animated: true, completion: nil)
     }
     override func viewDidLoad() {
@@ -56,6 +56,7 @@ class CameraController: UIViewController, AVCapturePhotoCaptureDelegate, UIViewC
         guard let previewFormatType = settings.availablePreviewPhotoPixelFormatTypes.first else {return}
         settings.previewPhotoFormat = [kCVPixelBufferPixelFormatTypeKey as String: previewFormatType]
         output.capturePhoto(with: settings, delegate: self)
+        
     }
     
     func photoOutput(_ output: AVCapturePhotoOutput, didFinishProcessingPhoto photo: AVCapturePhoto, error: Error?) {
