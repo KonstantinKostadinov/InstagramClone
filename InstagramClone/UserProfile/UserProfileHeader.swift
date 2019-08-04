@@ -10,7 +10,13 @@ import Foundation
 import UIKit
 import Firebase
 
+protocol UserProfileHeaderDelegate {
+    func didChangeToListView()
+    func didChangeToGridView()
+}
 class  UserProfileHeader: UICollectionViewCell {
+    
+    var delegate: UserProfileHeaderDelegate?
     var user: User? {
         didSet {
             guard let profileImageUrl = user?.profileImageUrl else {return}
@@ -87,19 +93,21 @@ class  UserProfileHeader: UICollectionViewCell {
         return iv
     }()
     
-    let gridButton: UIButton = {
+    lazy var gridButton: UIButton = {
         let button = UIButton(type: .system)
         let image = UIImage(named: "grid")
         button.setImage( image, for: .normal)
-        button.tintColor = UIColor(white: 0, alpha: 0.2)
+        button.tintColor = UIColor.rgb(red: 17, green: 154, blue: 237)
+        button.addTarget(self, action: #selector(handleChangeToGridView), for: .touchUpInside)
         return button
     }()
     
-    let listButton: UIButton = {
+    lazy var listButton: UIButton = {
         let button = UIButton(type: .system)
         let image = UIImage(named: "list")
         button.setImage( image, for: .normal)
         button.tintColor = UIColor(white: 0, alpha: 0.2)
+        button.addTarget(self, action: #selector(handleChangeToListView), for: .touchUpInside)
         return button
     }()
     
@@ -153,7 +161,16 @@ class  UserProfileHeader: UICollectionViewCell {
         button.addTarget(self, action: #selector(handleProfileOrFollow), for: .touchUpInside)
         return button
     }()
-    
+    @objc func handleChangeToGridView(){
+        listButton.tintColor = UIColor(white: 0, alpha: 0.2)
+        gridButton.tintColor = UIColor.rgb(red: 17, green: 154, blue: 237)
+        delegate?.didChangeToGridView()
+    }
+    @objc func handleChangeToListView(){
+        listButton.tintColor = UIColor.rgb(red: 17, green: 154, blue: 237)
+        gridButton.tintColor = UIColor(white: 0, alpha: 0.2)
+        delegate?.didChangeToListView()
+    }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
