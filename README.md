@@ -9,3 +9,4 @@ iOS Instagram Clone with Firebase
  * Fetching uploaded photos from Firebase to custom UICollectionViewCell in UserProfileController
  * Taking photo from the app and saving it on tht device
  * Added animations and custom transitions
+ * Used protocols/delegates and notifications/observers
