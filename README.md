@@ -11,4 +11,4 @@ iOS Instagram Clone with Firebase
  * Added animations and custom transitions
  * Used protocols/delegates and notifications/observers
 
-![] (Instagram_Clone.gif)
+![](Instagram_Clone.gif)
