@@ -10,3 +10,5 @@ iOS Instagram Clone with Firebase
  * Taking photo from the app and saving it on tht device
  * Added animations and custom transitions
  * Used protocols/delegates and notifications/observers
+
+![] (Instagram_Clone.gif)
